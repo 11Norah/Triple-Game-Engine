@@ -2,7 +2,7 @@ import java.awt.Color
 import java.awt.Graphics
 import java.awt.event.{ActionEvent, ActionListener, MouseListener}
 import java.util
-import javax.swing.{JButton, JFrame, JLabel, JPanel, JTextField}
+import javax.swing.{Action, JButton, JFrame, JLabel, JPanel, JTextField}
 
 
 class CheckersBoard extends JPanel  {
@@ -13,22 +13,32 @@ class CheckersBoard extends JPanel  {
 
   var counter=0
   def update(g:Graphics ,h:String):Unit={
+    var t1=new JTextField();;
+    var t2=new JTextField();;
+    class CustomActionListener extends ActionListener {
+      override def actionPerformed(e: ActionEvent): Unit = {
+        var FROM = t1.getText
+        var TO = t2.getText
+        var instance = new Checkers_Controller
+        instance.controller(FROM, TO)
+      }
+    }
     var f= new JFrame("Determine the move");
     var title=new JButton("Enter")
-    title.setBounds(250,100,100,50)
-  //  title.addActionListener(e:ActionListener)->{actionPerformed(e)}
+    title.addActionListener(new CustomActionListener())
+    title.setBounds(270,100,100,50)
     var l=new JLabel(h)
     l.setBounds(29,0,100,40)
     l.setVisible(true)
     var lt1=new JLabel("From :")
     lt1.setBounds(10,30,50,30)
-    var t1=new JTextField();
 
-    t1.setBounds(40,30,200,30)
+
+    t1.setBounds(60,30,200,30)
     var lt2=new JLabel("TO :")
     lt2.setBounds(10,80,50,30)
-    var t2=new JTextField();
-    t2.setBounds(40,90, 200,30);
+
+    t2.setBounds(60,90, 200,30);
 
     f.add(t1); f.add(t2); f.add(l);
     f.add(title); f.add(lt1); f.add(lt2);
@@ -37,15 +47,6 @@ class CheckersBoard extends JPanel  {
 
     f.setVisible(true);
 
-    def actionPerformed(e: ActionEvent): Unit = {
-      val s = e.getActionCommand
-      if(!s.isEmpty) {
-        var FROM = t1.getText
-        var TO = t2.getText
-        var instance = new Checkers_Controller
-        instance.controller(FROM, TO)
-      }
-    }
   }
   override def paint(g: Graphics): Unit = {
   update(g,"Player1")
