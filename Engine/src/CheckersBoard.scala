@@ -8,8 +8,10 @@ import javax.swing.{Action, JButton, JFrame, JLabel, JPanel, JTextField}
 class CheckersBoard extends JPanel  {
   var A=Array(8,7,6,5,4,3,2,1)
   var C=Array("A","B","C","D","E","F","G","H")
-  var properties1=new util.ArrayList[util.ArrayList[Int]]()
-  var properties2=new util.ArrayList[util.ArrayList[Int]]()
+  var XLABEL:String =null
+  var YLABEL:Int=0
+  var properties1=new util.ArrayList[Piece]()
+  //var properties2=new util.ArrayList[util.ArrayList[Int]]()
 
   var counter=0
   def update(g:Graphics ,h:String):Unit={
@@ -20,7 +22,7 @@ class CheckersBoard extends JPanel  {
         var FROM = t1.getText
         var TO = t2.getText
         var instance = new Checkers_Controller
-        instance.controller(FROM, TO)
+        instance.UpdateMove(g,FROM,TO)
       }
     }
     var f= new JFrame("Determine the move");
@@ -65,19 +67,24 @@ class CheckersBoard extends JPanel  {
         g.fillRect(i, j, 50, 50)
         if(j<250)
         { g.setColor(Color.LIGHT_GRAY)
-          var newArray=new util.ArrayList[Int]()
-          newArray.add(0)  //its colour white
-          newArray.add(i+50+5) //its x axis position
-          newArray.add(j+5)    //its y axis position
-          properties1.add(counter,newArray)
+          var instanP=new Piece()
+          instanP.setisWhite(true) //its colour is white
+          instanP.setX(i+50+5)  //setx position
+          instanP.setY(j+5)  //sety position
+          System.out.print("llllllllllllll"+A(k) +C(k))
+          instanP.setchar(C(k)); instanP.setInt(A(k))
+          properties1.add(counter,instanP)
+          counter+=1
           g.fillOval(i+50+5,j+5,30,30)}
         else if(j>350 ){
           g.setColor(Color.DARK_GRAY)
-          var newArray=new util.ArrayList[Int]()
-          newArray.add(1)  //its colour black
-          newArray.add(i+50+5) //its x axis position
-          newArray.add(j+5)    //its y axis position
-          properties2.add(counter,newArray)
+          var instanP=new Piece()
+          instanP.setisWhite(false) //its colour is white
+          instanP.setX(i+50+5)  //setx position
+          instanP.setY(j+5)  //sety position
+          instanP.setchar(C(k)); instanP.setInt(A(k))
+          properties1.add(counter,instanP)
+          counter+=1
           g.fillOval(i+5+50,j+5,30,30)
         }
         j += 100
@@ -86,6 +93,7 @@ class CheckersBoard extends JPanel  {
 
       i+= 100
       g.setColor(Color.BLACK)
+
       g.drawString(A(k)+"",510,m+5)
       g.drawString(A(k)+"",90,m+5)
       g.drawString(C(k),m,95)
@@ -104,19 +112,23 @@ class CheckersBoard extends JPanel  {
 
         if(j<250)
         { g.setColor(Color.LIGHT_GRAY)
-          var newArray=new util.ArrayList[Int]()
-          newArray.add(0)  //its colour white
-          newArray.add(i-50+5) //its x axis position
-          newArray.add(j+5)    //its y axis position
-          properties1.add(counter,newArray)
+          var instanP=new Piece()
+          instanP.setisWhite(true) //its colour is white
+          instanP.setX(i-50+5)  //setx position
+          instanP.setY(j+5)  //sety position
+          instanP.setchar(C(k)); instanP.setInt(A(k))
+          properties1.add(counter,instanP)
+          counter+=1
           g.fillOval(i+5-50,j+5,30,30)}
         else if(j>250){
           g.setColor(Color.DARK_GRAY)
-          var newArray=new util.ArrayList[Int]()
-          newArray.add(1)  //its colour black
-          newArray.add(i-50+5) //its x axis position
-          newArray.add(j+5)    //its y axis position
-          properties2.add(counter,newArray)
+          var instanP=new Piece()
+          instanP.setisWhite(false) //its colour is black
+          instanP.setX(i-50+5)  //setx position
+          instanP.setY(j+5)  //sety position
+          instanP.setchar(C(k)); instanP.setInt(A(k))
+          properties1.add(counter,instanP)
+          counter+=1
           g.fillOval(i+5-50,j+5,30,30)
         }
 
